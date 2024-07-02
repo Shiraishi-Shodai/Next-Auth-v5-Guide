@@ -9,7 +9,7 @@ export const publicRoutes = ["/"];
  * これらのルートはユーザーがログイン後/settingへとリダイレクトされる
  * @type {string[]}
  */
-export const authRoutes = ["/auth/login", "/auth/register"];
+export const authRoutes = ["/auth/login", "/auth/register", "/auth/error"];
 
 /**
  * 認証用のapiプレフィックス
