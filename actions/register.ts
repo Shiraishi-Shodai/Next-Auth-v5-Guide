@@ -5,8 +5,8 @@ import * as z from "zod";
 import bcrypt from "bcryptjs";
 import prisma from "@/lib/db";
 import { getUserByEmail } from "@/data/user";
-import { generateVerficationToken } from "@/lib/tokens";
-import { sendVerficationEmail } from "@/lib/mail";
+import { generateVerificationToken } from "@/lib/tokens";
+import { sendVerificationEmail } from "@/lib/mail";
 
 export const register = async (values: z.infer<typeof RegisterSchema>) => {
   const validatedFields = RegisterSchema.safeParse(values);
@@ -32,8 +32,8 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
   });
 
   // 認証トークンをメアドに送信
-  const verficationToken = await generateVerficationToken(email);
-  await sendVerficationEmail(verficationToken.email, verficationToken.token);
+  const verificationToken = await generateVerificationToken(email);
+  await sendVerificationEmail(verificationToken.email, verificationToken.token);
 
-  return { success: "user created" };
+  return { success: "Please check the email that was sent to you" };
 };

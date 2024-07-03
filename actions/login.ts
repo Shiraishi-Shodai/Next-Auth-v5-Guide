@@ -2,8 +2,8 @@
 
 import { signIn } from "@/auth";
 import { getUserByEmail } from "@/data/user";
-import { sendVerficationEmail } from "@/lib/mail";
-import { generateVerficationToken } from "@/lib/tokens";
+import { sendVerificationEmail } from "@/lib/mail";
+import { generateVerificationToken } from "@/lib/tokens";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { LoginSchema } from "@/schemas";
 import { AuthError } from "next-auth";
@@ -22,10 +22,12 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
     return { error: "Email does not exist!" };
   }
 
-  // emailVerifiedがなければ、トークンを生成し、認証リンクを送信
+  // サインイン後初めてのログイン時にemailVerifiedがなければ、トークンを生成し、認証リンクを送信
   if (!existingUser.emailVerified) {
-    const verficationToken = await generateVerficationToken(existingUser.email);
-    sendVerficationEmail(verficationToken.email, verficationToken.token);
+    const verificationToken = await generateVerificationToken(
+      existingUser.email
+    );
+    sendVerificationEmail(verificationToken.email, verificationToken.token);
     return { success: "Confirmation email sent!" };
   }
 

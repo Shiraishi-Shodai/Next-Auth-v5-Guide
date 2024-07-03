@@ -2,7 +2,7 @@
  * ログインしていなくてもアクセスできるパスの配列
  * @type {string[]}
  */
-export const publicRoutes = ["/"];
+export const publicRoutes = ["/", "/auth/new-verification"];
 
 /**
  * 認証に使用されるパスの配列
